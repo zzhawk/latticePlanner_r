@@ -6,7 +6,7 @@
 namespace es {
   
 struct SpiralPoint {
-  double x, y, t;
+   double x{}, y{}, t{};
 };
 
 struct SpiralParameter {

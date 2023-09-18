@@ -109,12 +109,12 @@ ShapeType calcBiarcSolution(const SpiralPoint& start, const SpiralPoint& goal, S
       type = ShapeType::LINE;
       k1 = k2 = 0.0;
       L2 = L1 = 0.5 * L;
-      std::cout << "# straight" << std::endl;
+      //std::cout << "# straight" << std::endl;
     }
     else {
       // Same Arc.
       type = ShapeType::ARC;
-      std::cout << "# Arc" << std::endl;
+      //std::cout << "# Arc" << std::endl;
       k2 = k1 = -2.0 * sin(0.5 * (start.t - goal.t)) / L;
       if (angle_mean == 0.0) {
         L2 = L1 = 0.25 * M_PI * L;
@@ -132,7 +132,7 @@ ShapeType calcBiarcSolution(const SpiralPoint& start, const SpiralPoint& goal, S
     p2.length = L2;
   }
   else {
-    std::cout << "# biarc" << std::endl;
+    //std::cout << "# biarc" << std::endl;
     // biarc.
     type = ShapeType::BIARC;
     double k1 = -4.0 * sin((3.0 * start.t + goal.t) / 4.0 - angle) * cos((goal.t - start.t) / 4.0) / L;

@@ -4,6 +4,7 @@
 #include <optional>
 #include "lane/euler_spiral.hpp"
 #include "polynomials.hpp"
+#include "obstacle.hpp"
 
 #ifndef LATTICE_HPP_
 #define LATTICE_HPP_
@@ -89,20 +90,21 @@ namespace fr {
       std::optional<QuinticPolynomial> lateral_polynomial{};
       std::optional<QuarticPolynomial> longitudinal_polynomial{};
       
-      FrenetLane samples;
-      CartesianLane global;
+      FrenetLane samples{};
+      CartesianLane global{};
 
-      double cd = 0.0;
-      double cv = 0.0;
-      double cf = 0.0;
+      double cd{};
+      double cv{};
+      double cf{};
 
-      bool ok = false;
+      bool ok{};
    };
 
    class FrenetPath
    {
    public:
-      explicit FrenetPath(Parameters para, es::SpiralParameter rfl, Status sts) :_para(para), _rfl(rfl), _sts(sts) {}
+      explicit FrenetPath(Parameters para, es::SpiralParameter rfl, Status sts, shared_ptr<ob::Constraints> obj) :
+          _para(para), _rfl(rfl), _sts(sts), _obj{std::move(obj)} {}
       virtual ~FrenetPath() = default;
 
       FrenetPath(const FrenetPath&) = default;
@@ -115,13 +117,14 @@ namespace fr {
       void setStatus(Status sts);
 
    private:
-      Parameters _para;
-      es::SpiralParameter _rfl;
-      Status _sts;
+      Parameters _para{};
+      es::SpiralParameter _rfl{};
+      Status _sts{};
+      std::shared_ptr<ob::Constraints> _obj{};
 
       vector<Trajectory> generateTrajectories();
       void calcGlobalPaths(vector<Trajectory>& trajs);
-      bool isCollision(vector<Trajectory>& trajs);
+      bool isCollision(Trajectory &trajs);
 
       void checkPaths(vector<Trajectory>& trajs);
       Trajectory findOptimal(vector<Trajectory>& trajs);

@@ -100,8 +100,15 @@ namespace fr {
 		}
 	}
 
-	bool FrenetPath::isCollision(vector<Trajectory>& trajs)
+	bool FrenetPath::isCollision(Trajectory & traj)
 	{
+		for (auto sobj : _obj->static_obstacles) {
+			for (int i = 0; i < traj.global.x.size(); ++i) {
+				geo_point gp_in(traj.global.x[i], traj.global.y[i]);
+				if (boost::geometry::within(gp_in, sobj.getPoly())) return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -126,7 +133,7 @@ namespace fr {
 				continue;
 			}
 
-			if (isCollision(trajs)) {
+			if (isCollision(tj)) {
 				continue;
 			}
 

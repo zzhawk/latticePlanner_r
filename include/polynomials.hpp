@@ -25,12 +25,12 @@ namespace fr {
 
    protected:
       /// @brief polynomial coefficients
-      double a_ = 0.0;
-      double b_ = 0.0;
-      double c_ = 0.0;
-      double d_ = 0.0;
-      double e_ = 0.0;
-      double f_ = 0.0;
+      double a_{};
+      double b_{};
+      double c_{};
+      double d_{};
+      double e_{};
+      double f_{};
 
    public:
       /// @brief Create a quintic polynomial between an initial and final state over a parameter length
